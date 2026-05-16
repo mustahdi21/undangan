@@ -1,0 +1,7 @@
+# Root fallback: if Apache DocumentRoot is project root (not /public),
+# redirect all traffic into /public safely.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^$ public/ [L]
+    RewriteRule (.*) public/$1 [L]
+</IfModule>

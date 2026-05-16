@@ -95,6 +95,34 @@ chmod -R 775 /www/wwwroot/domainkamu.com/storage
 - Nonaktifkan `display_errors` di production.
 - Tambahkan log rotation untuk `storage/logs`.
 
+
+### 10) Jika pakai Apache (mengatasi Internal Server Error)
+Jika domain Anda menggunakan Apache (seperti pesan error yang Anda kirim), lakukan ini:
+
+1. Pastikan `DocumentRoot` mengarah ke folder `public`.
+2. Aktifkan module rewrite:
+   - Ubuntu/Debian: `a2enmod rewrite && systemctl restart apache2`
+3. Pastikan `AllowOverride All` aktif pada virtual host agar `.htaccess` terbaca.
+4. File `.htaccess` sudah disediakan pada:
+   - `/public/.htaccess` (front controller routing)
+   - `/.htaccess` (fallback jika document root masih di project root)
+5. Cek error log Apache untuk detail error sebenarnya:
+   - `/var/log/apache2/error.log` (Debian/Ubuntu)
+   - `/www/wwwlogs/DOMAIN.error.log` (umum di panel hosting)
+
+Contoh VirtualHost Apache yang benar:
+```apache
+<VirtualHost *:80>
+    ServerName domainkamu.com
+    DocumentRoot /www/wwwroot/domainkamu.com/public
+
+    <Directory /www/wwwroot/domainkamu.com/public>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
 ### 9) Validasi setelah deploy
 - Buka `/` (landing page harus tampil).
 - Buka `/login`, `/register`, `/dashboard`, `/admin`.
