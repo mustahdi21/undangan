@@ -1,0 +1,95 @@
+# ================================
+# Undangan Premium - Apache Rules
+# ================================
+
+Options -Indexes
+DirectoryIndex index.php index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Hapus trailing slash (kecuali folder fisik)
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [R=301,L]
+
+    # Jangan rewrite file/folder yang benar-benar ada
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Friendly URL untuk route undangan (opsional)
+    RewriteRule ^undangan/?$ /index.php [L,QSA]
+
+    # Pretty URL tanpa .php (public)
+    RewriteRule ^sitemap$ /sitemap.php [L,QSA]
+
+    # Pretty URL tanpa .php (admin)
+    RewriteRule ^admin/login$ /admin/login.php [L,QSA]
+    RewriteRule ^admin/dashboard$ /admin/dashboard.php [L,QSA]
+
+    # Pretty URL tanpa .php (API)
+    RewriteRule ^api/rsvp$ /api/rsvp.php [L,QSA]
+    RewriteRule ^api/wishes$ /api/wishes.php [L,QSA]
+    RewriteRule ^api/order-create$ /api/order_create.php [L,QSA]
+    RewriteRule ^api/order-mark-paid$ /api/order_mark_paid.php [L,QSA]
+    RewriteRule ^api/select-theme$ /api/select_theme.php [L,QSA]
+    RewriteRule ^api/buyer-profile-save$ /api/buyer_profile_save.php [L,QSA]
+
+    # Buyer area
+    RewriteRule ^buyer$ /buyer.php [L,QSA]
+    RewriteRule ^buyer/login$ /buyer/login.php [L,QSA]
+    RewriteRule ^buyer/register$ /buyer/register.php [L,QSA]
+    RewriteRule ^buyer/dashboard$ /buyer/dashboard.php [L,QSA]
+    RewriteRule ^buyer/logout$ /buyer/logout.php [L,QSA]
+
+    # Sitemap tanpa ekstensi
+    RewriteRule ^sitemap\.xml$ /sitemap.php [L,QSA]
+
+    # Fallback umum: /path -> /path.php jika file php ada
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+    RewriteRule ^(.+)$ /$1.php [L,QSA]
+</IfModule>
+
+# Security headers dasar
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# Lindungi file sensitif
+<FilesMatch "^(\.env|composer\.(json|lock)|package\.(json|lock)|yarn\.lock)$">
+    Require all denied
+</FilesMatch>
+
+# Cegah akses langsung ke folder config/database/sql backup
+RewriteRule ^(config|database)/ - [F,L,NC]
+
+# Kompresi gzip (jika modul tersedia)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css
+    AddOutputFilterByType DEFLATE application/xml application/xhtml+xml application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript application/x-javascript text/javascript application/json
+    AddOutputFilterByType DEFLATE font/ttf font/otf image/svg+xml
+</IfModule>
+
+# Browser caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 7 days"
+    ExpiresByType application/javascript "access plus 7 days"
+    ExpiresByType text/javascript "access plus 7 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType video/mp4 "access plus 30 days"
+    ExpiresByType audio/mpeg "access plus 30 days"
+</IfModule>
+
+# Nonaktifkan signature server
+ServerSignature Off
