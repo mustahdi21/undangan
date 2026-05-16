@@ -63,10 +63,11 @@ location ~ \.php$ {
 > Jika socket berbeda, cek di aaPanel PHP-FPM settings.
 
 ### 5) Konfigurasi Database
-1. Buat database baru di menu **Database** (contoh: `undangan`).
-2. Import file SQL:
+1. Buat database baru di menu **Database** (contoh: `undangan_eth1`).
+2. Pilih database tersebut di phpMyAdmin/aaPanel, lalu import file:
    - `database/schema.sql`
-3. Sesuaikan kredensial di `config/app.php`:
+3. **Jangan** jalankan query `CREATE DATABASE` jika user DB Anda tidak punya privilege (umum di shared hosting).
+4. Sesuaikan kredensial di `config/app.php`:
    - host, port, database, username, password.
 
 ### 6) Permission folder
