@@ -1,0 +1,1 @@
+<div class="p-6"><h1 class="text-3xl font-bold">Admin Panel</h1><div class="grid md:grid-cols-4 gap-4 mt-4"><?php foreach(['Total User','Transaksi','Undangan Aktif','Revenue'] as $w): ?><div class="glass p-4 rounded-2xl"><?= $w ?></div><?php endforeach; ?></div></div>
