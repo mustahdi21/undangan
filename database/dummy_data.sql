@@ -1,0 +1,4 @@
+INSERT INTO users(name,email,password) VALUES ('Administrator','admin@demo.com','$2y$10$E9zVeQzvLmr2/WhVgjj90.O5E4lEjEAKjOMM6t4M0v4aDmlJBI31.');
+INSERT INTO themes(name,slug,primary_color,secondary_color) VALUES
+('Elegant Gold','elegant-gold','#D4AF37','#1F2937'),('Islamic Green','islamic-green','#0F766E','#134E4A'),('Minimal White','minimal-white','#F9FAFB','#111827'),('Dark Luxury','dark-luxury','#09090B','#A16207'),('Floral Pink','floral-pink','#F9A8D4','#831843'),('Rustic Brown','rustic-brown','#92400E','#451A03'),('Korean Style','korean-style','#E5E7EB','#9CA3AF'),('Modern Black','modern-black','#000000','#52525B'),('Anime Theme','anime-theme','#7C3AED','#EC4899');
+INSERT INTO wishes(guest_name,message,created_at) VALUES ('Rani','Semoga sakinah mawaddah warahmah',NOW()),('Budi','Selamat menempuh hidup baru!',NOW());
