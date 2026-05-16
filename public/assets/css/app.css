@@ -1,0 +1,6 @@
+.glass{background:rgba(255,255,255,.08);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.2)}
+.btn{background:linear-gradient(90deg,#c026d3,#6366f1);padding:.75rem 1rem;border-radius:.9rem;font-weight:700}
+.btn-outline{border:1px solid rgba(255,255,255,.4);padding:.75rem 1rem;border-radius:.9rem}
+.btn-sm,.btn-sm-dark{padding:.45rem .8rem;border-radius:.7rem;font-size:.85rem}
+.btn-sm{background:#fff;color:#000}.btn-sm-dark{background:#1e293b}
+.input{width:100%;padding:.75rem;border-radius:.75rem;background:#0f172a;border:1px solid #334155}
