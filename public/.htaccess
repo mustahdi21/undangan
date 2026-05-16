@@ -2,19 +2,8 @@
     RewriteEngine On
     RewriteBase /
 
-    # If request is not an existing file or directory,
-    # route everything to index.php (front controller).
+    # Route all non-file/non-directory requests to front controller
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^ index.php [L,QSA]
 </IfModule>
-
-# Security headers (basic hardening)
-<IfModule mod_headers.c>
-    Header always set X-Content-Type-Options "nosniff"
-    Header always set X-Frame-Options "SAMEORIGIN"
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-</IfModule>
-
-# Prevent directory listing
-Options -Indexes

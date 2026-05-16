@@ -142,3 +142,23 @@ Contoh VirtualHost Apache yang benar:
 - Escape output dasar untuk parameter tamu.
 - Pisahkan role admin & user route.
 - Fondasi siap ditingkatkan dengan CSRF token, rate limit, signature webhook, dan audit log.
+
+
+### 11) Jika masih 500 (paling sering di shared hosting Apache)
+Beberapa hosting memblokir directive tertentu di `.htaccess` seperti `Options` atau `Header`.
+Karena itu, file `public/.htaccess` sekarang dibuat **minimal** (rewrite only).
+
+Checklist cepat:
+1. Pastikan versi PHP minimal **8.1**.
+2. Pastikan `DocumentRoot` ke folder `public`.
+3. Pastikan `mod_rewrite` aktif + `AllowOverride All`.
+4. Jika tetap 500, cek log error terbaru lalu cocokkan line number file yang error.
+
+Perintah cek log cepat:
+```bash
+tail -n 100 /var/log/apache2/error.log
+```
+atau (panel hosting):
+```bash
+tail -n 100 /www/wwwlogs/undangan.etherealmarket.my.id.error.log
+```
