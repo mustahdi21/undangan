@@ -172,3 +172,52 @@ Perbaikan yang dipakai di project ini:
 - root `index.php` meneruskan eksekusi ke `public/index.php`
 
 Dengan pola ini, route dinamis tetap berjalan dan loop internal redirect berhenti.
+
+
+### 13) Solusi Service Unavailable (HTTP 503)
+Error **503 Service Unavailable** umumnya bukan error kode aplikasi ini, tetapi service web/PHP di server sedang down, overload, atau maintenance.
+
+#### A. Cek cepat status service (Apache + PHP-FPM + MySQL)
+```bash
+systemctl status apache2
+systemctl status php8.2-fpm
+systemctl status mysql
+```
+> Sesuaikan versi PHP-FPM Anda (mis. `php8.1-fpm`, `php8.3-fpm`).
+
+#### B. Restart service utama
+```bash
+systemctl restart apache2
+systemctl restart php8.2-fpm
+systemctl restart mysql
+```
+
+#### C. Cek error log terbaru
+```bash
+tail -n 200 /var/log/apache2/error.log
+```
+atau (aaPanel/cPanel style):
+```bash
+tail -n 200 /www/wwwlogs/undangan.etherealmarket.my.id.error.log
+```
+
+#### D. Verifikasi health endpoint
+Setelah deploy, akses:
+- `https://undangan.etherealmarket.my.id/health.php`
+
+Jika endpoint ini return JSON `status: ok`, berarti PHP berjalan. Jika tetap 503, masalah ada di layer webserver/upstream/server capacity.
+
+#### E. Penyebab umum 503 di hosting
+1. PHP-FPM pool mati/crash.
+2. Batas proses (`pm.max_children`) habis.
+3. Maintenance mode dari panel hosting/CDN.
+4. WAF/Cloudflare origin timeout.
+5. Resource VPS habis (RAM/CPU/disk inode).
+
+#### F. Checklist kapasitas server
+```bash
+free -h
+uptime
+df -h
+```
+Jika RAM tinggal sangat sedikit, naikkan resource atau tuning pool PHP-FPM.
