@@ -1,0 +1,1 @@
+<div class="min-h-screen grid place-items-center p-6"><form class="glass w-full max-w-md p-6 rounded-2xl"><h1 class="text-2xl font-bold mb-4">Login</h1><input class="input" placeholder="Email"><input type="password" class="input mt-3" placeholder="Password"><button class="btn w-full mt-4">Masuk</button></form></div>

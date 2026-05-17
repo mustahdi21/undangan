@@ -1,0 +1,9 @@
+{
+  "name": "premium/undangan-saas",
+  "description": "Premium digital invitation SaaS with native PHP",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  }
+}
